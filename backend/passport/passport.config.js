@@ -30,6 +30,7 @@ export const configurePassport = async () => {
                 if(!isPasswordValid){
                     throw new Error("Invalid Credentials");
                 }
+                return done(null, user);
             } catch(err){
                 return done(err);
             }
