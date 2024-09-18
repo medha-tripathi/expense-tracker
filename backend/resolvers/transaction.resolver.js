@@ -27,11 +27,12 @@ const transactionResolver = {
     Mutation: {
         createTransaction: async(_, {input}, context) => {
             try {
-                if (!context.getUser())
-                    throw new Error("Unauthorized");
-                const userId = await context.getUser()._id;
-                const transaction = await Transaction.create({userId, ...input});
-                return transaction;
+                const newTransaction = new Transaction({
+					...input,
+					userId: context.getUser()._id,
+				});
+				await newTransaction.save();
+				return newTransaction;
             } catch (err) {
                 console.error("Error creating transaction", err);
                 throw new Error(err.message || "Internal Server Error");
@@ -54,7 +55,7 @@ const transactionResolver = {
             } catch (err) {
                 console.error("Error deleting transaction", err);
                 throw new Error(err.message || "Internal Server Error");
-            }
+            } 
         }
     }
 }
