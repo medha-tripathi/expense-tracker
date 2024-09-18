@@ -26,7 +26,7 @@ const Card = ({ transaction }) => {
 	const cardClass = categoryColorMap[category];
 
 	const [deleteTransaction, {loading} ] = useMutation(DELETE_TRANSACTION, {
-		refetchQueries: ["GetTransactions"]
+		refetchQueries: ["GetTransactions", "GetTransactionStatistics"]
 	})
 
 	const handleDelete = () => {
