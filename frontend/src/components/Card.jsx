@@ -6,8 +6,9 @@ import { FaTrash } from "react-icons/fa";
 import { HiPencilAlt } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { formatDate } from "../lib/formatDate";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { DELETE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
+import { GET_AUTHENTICATED_USER } from "../graphql/queries/user.query";
 import toast from "react-hot-toast";
 
 const categoryColorMap = {
@@ -38,6 +39,8 @@ const Card = ({ transaction }) => {
 			console.error("Error: ", error);
 		}
 	}
+
+	const {data: authUserData} = useQuery(GET_AUTHENTICATED_USER);
 
 	return (
 		<div className={`rounded-md p-4 bg-gradient-to-br ${cardClass}`}>
@@ -71,7 +74,7 @@ const Card = ({ transaction }) => {
 				<div className='flex justify-between items-center'>
 					<p className='text-xs text-black font-bold'>{formattedDate}</p>
 					<img
-						src={"https://tecdn.b-cdn.net/img/new/avatars/2.webp"}
+						src={authUserData?.authUser.profilePicture}
 						className='h-8 w-8 border rounded-full'
 						alt=''
 					/>

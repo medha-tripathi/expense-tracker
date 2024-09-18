@@ -43,7 +43,7 @@ const SignUpPage = () => {
 				}
 			})
 		} catch (error) {
-			console.log("Error: ", error);
+			console.error("Error: ", error);
 			toast.error(error.message);
 		}
 	};
